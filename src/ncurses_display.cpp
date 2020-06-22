@@ -91,25 +91,48 @@ void NCursesDisplay::Display(System& system, int n) {
   start_color();  // enable color
 
   int x_max{getmaxx(stdscr)};
-  WINDOW* system_window = newwin(9, x_max - 1, 0, 0);
+  //WINDOW* system_window = newwin(9, x_max - 1, 0, 0);
   
-  WINDOW* process_window =
-      newwin(3 + n, x_max - 1, system_window->_maxy + 1, 0);
+  //WINDOW* process_window =
+  //    newwin(3 + n, x_max - 1, system_window->_maxy + 1, 0);
 
   while (1) {
-    init_pair(1, COLOR_BLUE, COLOR_BLACK);
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);
-    box(system_window, 0, 0);
-    box(process_window, 0, 0);
-    DisplaySystem(system, system_window);
-    DisplayProcesses(system.Processes(), process_window, n);
-    wrefresh(system_window);
-    wrefresh(process_window);
-    refresh();
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    //init_pair(1, COLOR_BLUE, COLOR_BLACK);
+    //init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    //box(system_window, 0, 0);
+    //box(process_window, 0, 0);
+    //DisplaySystem(system, system_window);
+    //DisplayProcesses(system.Processes(), process_window, n);
+    //wrefresh(system_window);
+    //wrefresh(process_window);
+    std::vector<Process>& processes = system.Processes();
+    for (int i = 0; i < n; ++i){
+       std::cout <<  to_string(processes[i].Pid()).c_str() << "\n";
+      // std::cout <<  processes[i].User().c_str() << "\n";
+      // float cpu = processes[i].CpuUtilization() * 100;
+      // std::cout <<  to_string(cpu).substr(0, 4).c_str() << "\n";
+      // std::cout <<  processes[i].Ram().c_str() << "\n";
+      // std::cout <<  Format::ElapsedTime(processes[i].UpTime()).c_str() << "\n";
+      // std::cout <<  processes[i].Command() << "\n";
+
+    }
+    std::cout << "\n";
+    std::cout << "\n";
+
+    /*
+    mvwprintw(window, row, user_column, processes[i].User().c_str());
+    float cpu = processes[i].CpuUtilization() * 100;
+    mvwprintw(window, row, cpu_column, to_string(cpu).substr(0, 4).c_str());
+    mvwprintw(window, row, ram_column, processes[i].Ram().c_str());
+    mvwprintw(window, row, time_column,
+              Format::ElapsedTime(processes[i].UpTime()).c_str());
+    mvwprintw(window, row, command_column,
+              processes[i].Command().substr(0, window->_maxx - 46).c_str());
+    */
+
+    
+    //refresh();
+    //std::this_thread::sleep_for(std::chrono::seconds(1));
   }
-
-
-
   endwin();
 }
